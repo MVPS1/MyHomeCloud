@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>HOME CLOUD</h1>
+
+    <form action="/saveMessage" method="POST" enctype="multipart/form-data">
+        <input type="text" name="folder" placeholder="أسم الملف" required>
+        <input id ="images" type="file" name="image" multiple>
+        <input type="submit" value="رفع" id="submitButton">
+    </form>
+
+    <h4 id="maxSize" style="color: red;"></h4>
+
+    <script>
+        let input = document.getElementById("images")
+        let maxSize = document.getElementById("maxSize")
+        let submitButton = document.getElementById("submitButton")
+
+        input.addEventListener('change', () => {
+            let files = input.files;
+
+            if(files.length > 0){
+                size = 0
+                fullSize = 1 * 1024 * 1024 * 1024 * 10; //1GB
+                for(i = 0; i < files.length; i++){
+                    size = size + files[i].size
+                }
+
+                if(size > fullSize){
+                    submitButton.style.display = "none"
+                    maxSize.innerText = "TOO BIG"
+                    return;
+                }
+
+
+                submitButton.style.display = "block"
+                maxSize.innerText = ""
+            }
+        });
+    </script>
+</body>
+</html>
